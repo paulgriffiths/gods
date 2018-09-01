@@ -20,32 +20,43 @@ func TestPushNotEmptyStackInt(t *testing.T) {
 	}
 }
 
-func TestPopEmptyStackInt(t *testing.T) {
+func TestPushPop(t *testing.T) {
+	ops := []struct {
+		op    string
+		value int
+	}{
+		{"push", 7},
+		{"pop", 7},
+		{"push", 13},
+		{"push", 18},
+		{"pop", 18},
+		{"pop", 13},
+		{"push", 11},
+		{"push", 22},
+		{"push", 33},
+		{"pop", 33},
+		{"push", 44},
+		{"pop", 44},
+		{"pop", 22},
+		{"push", 55},
+		{"pop", 55},
+		{"pop", 11},
+	}
+
 	s := stacks.NewStackInt()
-	s.Push(42)
-	s.Pop()
+	for _, op := range ops {
+		switch op.op {
+		case "push":
+			s.Push(op.value)
+		case "pop":
+			c := s.Pop()
+			if c != op.value {
+				t.Errorf("got %d, want %d", c, op.value)
+			}
+		}
+	}
+
 	if !s.IsEmpty() {
 		t.Errorf("stack is not empty")
-	}
-}
-
-func TestPushPopStackInt(t *testing.T) {
-	s := stacks.NewStackInt()
-	vals := []int{
-		10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-		20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-		30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-		40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-	}
-
-	for _, n := range vals {
-		s.Push(n)
-	}
-
-	for n := len(vals) - 1; n >= 0; n-- {
-		p := s.Pop()
-		if p != vals[n] {
-			t.Errorf("got %d, want %d", p, vals[n])
-		}
 	}
 }
