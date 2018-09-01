@@ -41,3 +41,8 @@ func (g *amGraph) IsVisited(v int) bool {
 func (g *amGraph) NumVertices() int {
 	return g.size
 }
+
+func (g *amGraph) EdgeList() []Edge {
+    e := []Edge{}
+    return e
+}
