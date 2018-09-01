@@ -20,32 +20,42 @@ func TestEnqueueNotEmptyQueueInt(t *testing.T) {
 	}
 }
 
-func TestDequeueEmptyQueueInt(t *testing.T) {
-	q := queues.NewQueueInt()
-	q.Enqueue(42)
-	q.Dequeue()
-	if !q.IsEmpty() {
-		t.Errorf("queue is not empty")
+func TestEnqueueDequeue(t *testing.T) {
+	ops := []struct {
+		op    string
+		value int
+	}{
+		{"enqueue", 7},
+		{"dequeue", 7},
+		{"enqueue", 13},
+		{"enqueue", 18},
+		{"dequeue", 13},
+		{"dequeue", 18},
+		{"enqueue", 11},
+		{"enqueue", 22},
+		{"enqueue", 33},
+		{"dequeue", 11},
+		{"enqueue", 44},
+		{"dequeue", 22},
+		{"dequeue", 33},
+		{"enqueue", 55},
+		{"dequeue", 44},
+		{"dequeue", 55},
 	}
-}
 
-func TestDequeueQueueInt(t *testing.T) {
-	vals := []int{
-		10, 71, 12, 13, 14, 15, 16, 17, 18, 19,
-		20, 71, 22, 23, 24, 25, 26, 27, 28, 29,
-		30, 71, 32, 33, 34, 35, 36, 37, 38, 39,
-		40, 71, 42, 43, 44, 45, 46, 47, 48, 49,
-	}
 	q := queues.NewQueueInt()
-	for _, v := range vals {
-		q.Enqueue(v)
-	}
-	for n, _ := range vals {
-		p := q.Dequeue()
-		if p != vals[n] {
-			t.Errorf("got %d, want %d", p, vals[n])
+	for _, op := range ops {
+		switch op.op {
+		case "enqueue":
+			q.Enqueue(op.value)
+		case "dequeue":
+			c := q.Dequeue()
+			if c != op.value {
+				t.Errorf("got %d, want %d", c, op.value)
+			}
 		}
 	}
+
 	if !q.IsEmpty() {
 		t.Errorf("queue is not empty")
 	}
