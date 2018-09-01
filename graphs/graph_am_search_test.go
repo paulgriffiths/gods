@@ -6,7 +6,7 @@ import (
 )
 
 func TestBfs(t *testing.T) {
-	g := graphs.NewAMGraph(8)
+	g := graphs.NewAmGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
@@ -17,14 +17,15 @@ func TestBfs(t *testing.T) {
 	g.InsertEdge(4, 7)
 	g.InsertEdge(5, 7)
 	g.InsertEdge(6, 7)
-	l := graphs.BfsSpan(g, 0)
-	if !IntSliceEqual(l, []int{0, 1, 2, 3, 4, 5, 6, 7}) {
-		t.Errorf("got %v, want %v", l, []int{0, 1, 2, 3, 4, 5, 6, 7})
+	l := graphs.BfsVertexList(g, 0)
+	expected := graphs.VertexList{0, 1, 2, 3, 4, 5, 6, 7}
+	if !l.Equals(expected) {
+		t.Errorf("got %v, want %v", l, expected)
 	}
 }
 
 func TestDfs(t *testing.T) {
-	g := graphs.NewAMGraph(8)
+	g := graphs.NewAmGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
@@ -35,14 +36,15 @@ func TestDfs(t *testing.T) {
 	g.InsertEdge(4, 7)
 	g.InsertEdge(5, 7)
 	g.InsertEdge(6, 7)
-	l := graphs.DfsSpan(g, 0)
-	if !IntSliceEqual(l, []int{0, 1, 3, 7, 4, 5, 2, 6}) {
-		t.Errorf("got %v, want %v", l, []int{0, 1, 3, 7, 4, 5, 2, 6})
+	l := graphs.DfsVertexList(g, 0)
+	expected := graphs.VertexList{0, 1, 3, 7, 4, 5, 2, 6}
+	if !l.Equals(expected) {
+		t.Errorf("got %v, want %v", l, expected)
 	}
 }
 
 func TestDfsIter(t *testing.T) {
-	g := graphs.NewAMGraph(8)
+	g := graphs.NewAmGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
@@ -53,8 +55,9 @@ func TestDfsIter(t *testing.T) {
 	g.InsertEdge(4, 7)
 	g.InsertEdge(5, 7)
 	g.InsertEdge(6, 7)
-	l := graphs.DfsSpanIterative(g, 0)
-	if !IntSliceEqual(l, []int{0, 1, 3, 7, 4, 5, 2, 6}) {
-		t.Errorf("got %v, want %v", l, []int{0, 1, 3, 7, 4, 5, 2, 6})
+	l := graphs.DfsVertexListIterative(g, 0)
+	expected := graphs.VertexList{0, 1, 3, 7, 4, 5, 2, 6}
+	if !l.Equals(expected) {
+		t.Errorf("got %v, want %v", l, expected)
 	}
 }

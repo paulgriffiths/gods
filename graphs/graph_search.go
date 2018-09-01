@@ -1,32 +1,29 @@
 package graphs
 
-import (
-	"github.com/paulgriffiths/gods/queues"
-	"github.com/paulgriffiths/gods/stacks"
-)
-
-// DfsSpan returns a depth first spanning tree for a graph.
-func DfsSpan(g Graph, v int) []int {
-	l := []int{}
-	f := func(n int) {
-		l = append(l, n)
+// DfsVertexList returns a VertexList containing, in order, the vertices
+// visited during a recursive depth first search of a graph.
+func DfsVertexList(g Graph, v Vertex) VertexList {
+	l := VertexList{}
+	f := func(v Vertex) {
+		l = append(l, v)
 	}
 	Dfs(g, v, f)
 	return l
 }
 
-// DfsSpanIterative returns a depth first spanning tree for a graph.
-func DfsSpanIterative(g Graph, v int) []int {
-	l := []int{}
-	f := func(n int) {
-		l = append(l, n)
+// DfsVertexListIterative returns a VertexList containing, in order,
+// the vertices visited during an iterative depth first search of a graph.
+func DfsVertexListIterative(g Graph, v Vertex) VertexList {
+	l := VertexList{}
+	f := func(v Vertex) {
+		l = append(l, v)
 	}
 	DfsIterative(g, v, f)
 	return l
 }
 
 // Dfs performs a recursive depth first search of a graph.
-func Dfs(g Graph, v int, f func(int)) {
+func Dfs(g Graph, v Vertex, f func(Vertex)) {
 	g.Visit(v)
 	f(v)
 	for _, x := range g.Adjacent(v) {
@@ -37,8 +34,8 @@ func Dfs(g Graph, v int, f func(int)) {
 }
 
 // DfsIterative performs an iterative depth first search of a graph.
-func DfsIterative(g Graph, v int, f func(int)) {
-	s := stacks.NewStackInt()
+func DfsIterative(g Graph, v Vertex, f func(Vertex)) {
+	s := NewStackVertex()
 	s.Push(v)
 	for !s.IsEmpty() {
 		vtx := s.Pop()
@@ -53,19 +50,20 @@ func DfsIterative(g Graph, v int, f func(int)) {
 	}
 }
 
-// BfsSpan returns a breadth first spanning tree for a graph.
-func BfsSpan(g Graph, v int) []int {
-	l := []int{}
-	f := func(n int) {
-		l = append(l, n)
+// BfsVertexList returns a VertexList containing, in order, the vertices
+// visited during a breadth first search of a graph.
+func BfsVertexList(g Graph, v Vertex) VertexList {
+	l := VertexList{}
+	f := func(v Vertex) {
+		l = append(l, v)
 	}
 	Bfs(g, v, f)
 	return l
 }
 
 // Bfs performs a breadth first search of a graph.
-func Bfs(g Graph, v int, f func(int)) {
-	q := queues.NewQueueInt()
+func Bfs(g Graph, v Vertex, f func(Vertex)) {
+	q := NewQueueVertex()
 	g.Visit(v)
 	f(v)
 	q.Enqueue(v)
