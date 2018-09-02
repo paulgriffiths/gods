@@ -1,2 +1,5 @@
 *.bak
 *~
+*.swp
+cmd/maze/maze
+*.png
