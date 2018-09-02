@@ -79,3 +79,48 @@ func Bfs(g Graph, v Vertex, f func(Vertex)) {
 		}
 	}
 }
+
+// BfsFindPath finds, via a breadth first search, the a path between
+// vertices start and target, and returns a VertexList representing
+// that path.
+func BfsFindPath(g Graph, start, target Vertex) VertexList {
+	pred := make([]Vertex, g.NumVertices())
+	for i := 0; i < g.NumVertices(); i++ {
+		pred[i] = Vertex(-1)
+	}
+	found := false
+
+	q := NewQueueVertex()
+	g.Visit(start)
+	q.Enqueue(start)
+
+outer:
+	for !q.IsEmpty() {
+		vtx := q.Dequeue()
+		a := g.Adjacent(vtx)
+		for i := 0; i < len(a); i++ {
+			if !g.IsVisited(a[i]) {
+				pred[a[i]] = vtx
+				g.Visit(a[i])
+				q.Enqueue(a[i])
+				if a[i] == target {
+					found = true
+					break outer
+				}
+			}
+		}
+	}
+
+	if !found {
+		return nil
+	}
+
+	path := VertexList{}
+	crawl := target
+	path = append(path, crawl)
+	for pred[crawl] != -1 {
+		path = append(path, pred[crawl])
+		crawl = pred[crawl]
+	}
+	return path
+}
