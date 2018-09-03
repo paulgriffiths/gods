@@ -1,6 +1,14 @@
 # maze
 
-**maze** generates random mazes and finds paths through them.
+**maze** generates random mazes and finds paths through them, outputting
+the result as a PNG file.
+
+The maze is generated using a well-known algorithm, and the path is found
+by converting the maze to an undirected graph and performing a breadth-first
+search.
+
+When finding a path through a maze, the entrance is assumed to be at the
+top-left corner, and the exit at the bottom-right corner.
 
 ## Usage
 
@@ -24,7 +32,7 @@
 
 ![maze2](https://user-images.githubusercontent.com/5059971/44964442-93d5f900-aefe-11e8-8293-30f14f225956.png)
 
-    maze -x 10 -y 10 -s 30 -p -o maze3.png
+    maze -x 10 -y 10 -p -o maze3.png
 
 ![maze3](https://user-images.githubusercontent.com/5059971/44964453-a819f600-aefe-11e8-88c7-6f1058aa22bc.png)
 
