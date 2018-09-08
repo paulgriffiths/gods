@@ -2,11 +2,11 @@ package dfa
 
 // Dfa implements a deterministic finite automaton.
 type Dfa struct {
-	Q      int
-	S      []rune
-	D      []map[rune]int
-	Start  int
-	Accept []int
+	Q      int            // Number of states
+	S      []rune         // Alphabet
+	D      []map[rune]int // Transition function
+	Start  int            // Start state
+	Accept []int          // Set of accepting states
 }
 
 // Accepts returns true if the DFA accepts the provided string.
