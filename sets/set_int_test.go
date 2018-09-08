@@ -5,6 +5,31 @@ import (
 	"testing"
 )
 
+func TestSetIntEquals(t *testing.T) {
+	testCases := []struct {
+		a, b  sets.SetInt
+		equal bool
+	}{
+		{sets.SetInt{}, sets.SetInt{}, true},
+		{sets.SetInt{}, sets.SetInt{0}, false},
+		{sets.SetInt{0}, sets.SetInt{}, false},
+		{sets.SetInt{0}, sets.SetInt{0}, true},
+		{sets.SetInt{0}, sets.SetInt{1}, false},
+		{sets.SetInt{1}, sets.SetInt{0}, false},
+		{sets.SetInt{1}, sets.SetInt{1}, true},
+		{sets.SetInt{0, 1}, sets.SetInt{1, 0}, true},
+		{sets.SetInt{0, 1}, sets.SetInt{0, 2}, false},
+		{sets.SetInt{0, 1, 2}, sets.SetInt{0, 1}, false},
+	}
+
+	for n, tc := range testCases {
+		if tc.a.Equals(tc.b) != tc.equal {
+			t.Errorf("case %d, got %t, want %t", n+1,
+				tc.a.Equals(tc.b), tc.equal)
+		}
+	}
+}
+
 func TestSetIntLength(t *testing.T) {
 	testCases := []struct {
 		values []int
@@ -28,6 +53,7 @@ func TestSetIntLength(t *testing.T) {
 		}
 	}
 }
+
 func TestSetContains(t *testing.T) {
 	testCases := []struct {
 		values   []int
@@ -57,6 +83,46 @@ func TestSetContains(t *testing.T) {
 				t.Errorf("case (%d,%d), got %t, want %t", n, m,
 					s.Contains(m), c)
 			}
+		}
+	}
+}
+
+func TestSetUnion(t *testing.T) {
+	testCases := []struct {
+		a, b, u sets.SetInt
+	}{
+		{sets.SetInt{1, 2}, sets.SetInt{3, 4}, sets.SetInt{1, 2, 3, 4}},
+		{sets.SetInt{1, 2}, sets.SetInt{2, 3}, sets.SetInt{1, 2, 3}},
+		{sets.SetInt{1, 2}, sets.SetInt{1, 2}, sets.SetInt{1, 2}},
+		{sets.SetInt{1, 2}, sets.SetInt{1}, sets.SetInt{1, 2}},
+		{sets.SetInt{1, 2}, sets.SetInt{}, sets.SetInt{1, 2}},
+		{sets.SetInt{}, sets.SetInt{}, sets.SetInt{}},
+	}
+
+	for n, tc := range testCases {
+		s := tc.a.Union(tc.b)
+		if !s.Equals(tc.u) {
+			t.Errorf("case %d, got %v, want %v", n, s, tc.u)
+		}
+	}
+}
+
+func TestSetIntersection(t *testing.T) {
+	testCases := []struct {
+		a, b, u sets.SetInt
+	}{
+		{sets.SetInt{1, 2}, sets.SetInt{3, 4}, sets.SetInt{}},
+		{sets.SetInt{1, 2}, sets.SetInt{2, 3}, sets.SetInt{2}},
+		{sets.SetInt{1, 2}, sets.SetInt{1, 2}, sets.SetInt{1, 2}},
+		{sets.SetInt{1, 2}, sets.SetInt{1}, sets.SetInt{1}},
+		{sets.SetInt{1, 2}, sets.SetInt{}, sets.SetInt{}},
+		{sets.SetInt{}, sets.SetInt{}, sets.SetInt{}},
+	}
+
+	for n, tc := range testCases {
+		s := tc.a.Intersection(tc.b)
+		if !s.Equals(tc.u) {
+			t.Errorf("case %d, got %v, want %v", n, s, tc.u)
 		}
 	}
 }
