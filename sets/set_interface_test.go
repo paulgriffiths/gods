@@ -134,15 +134,15 @@ func TestSetInterfaceUnion(t *testing.T) {
 
 func TestSetInterfaceIntersection(t *testing.T) {
 	testCases := []struct {
-		a, b, u sets.SetInterface
+		a, b, i sets.SetInterface
 	}{
 		{sm12, sm34, smE}, {sm12, sm23, sm2}, {sm12, sm12, sm12},
 		{sm12, sm1, sm1}, {sm12, smE, smE}, {smE, smE, smE},
 	}
 
 	for n, tc := range testCases {
-		if s := tc.a.Intersection(tc.b); !s.Equals(tc.u) {
-			t.Errorf("case %d, got %v, want %v", n+1, s, tc.u)
+		if s := tc.a.Intersection(tc.b); !s.Equals(tc.i) {
+			t.Errorf("case %d, got %v, want %v", n+1, s, tc.i)
 		}
 	}
 }
