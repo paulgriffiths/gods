@@ -19,27 +19,27 @@ func mockTypeEquals(a, b interface{}) bool {
 }
 
 var (
-	t0 = mockType{0, "zero"}
-	t1 = mockType{1, "one"}
-	t2 = mockType{2, "two"}
-	t3 = mockType{3, "three"}
-	t4 = mockType{4, "four"}
+	m0 = mockType{0, "zero"}
+	m1 = mockType{1, "one"}
+	m2 = mockType{2, "two"}
+	m3 = mockType{3, "three"}
+	m4 = mockType{4, "four"}
 )
 
 var (
-	sme    = sets.NewSetInterface(mockTypeEquals)
-	sm0    = sets.NewSetInterface(mockTypeEquals, t0)
-	sm1    = sets.NewSetInterface(mockTypeEquals, t1)
-	sm2    = sets.NewSetInterface(mockTypeEquals, t2)
-	sm01   = sets.NewSetInterface(mockTypeEquals, t0, t1)
-	sm10   = sets.NewSetInterface(mockTypeEquals, t1, t0)
-	sm02   = sets.NewSetInterface(mockTypeEquals, t0, t2)
-	sm12   = sets.NewSetInterface(mockTypeEquals, t1, t2)
-	sm23   = sets.NewSetInterface(mockTypeEquals, t2, t3)
-	sm34   = sets.NewSetInterface(mockTypeEquals, t3, t4)
-	sm012  = sets.NewSetInterface(mockTypeEquals, t0, t1, t2)
-	sm123  = sets.NewSetInterface(mockTypeEquals, t1, t2, t3)
-	sm1234 = sets.NewSetInterface(mockTypeEquals, t1, t2, t3, t4)
+	smE    = sets.NewSetInterface(mockTypeEquals)
+	sm0    = sets.NewSetInterface(mockTypeEquals, m0)
+	sm1    = sets.NewSetInterface(mockTypeEquals, m1)
+	sm2    = sets.NewSetInterface(mockTypeEquals, m2)
+	sm01   = sets.NewSetInterface(mockTypeEquals, m0, m1)
+	sm10   = sets.NewSetInterface(mockTypeEquals, m1, m0)
+	sm02   = sets.NewSetInterface(mockTypeEquals, m0, m2)
+	sm12   = sets.NewSetInterface(mockTypeEquals, m1, m2)
+	sm23   = sets.NewSetInterface(mockTypeEquals, m2, m3)
+	sm34   = sets.NewSetInterface(mockTypeEquals, m3, m4)
+	sm012  = sets.NewSetInterface(mockTypeEquals, m0, m1, m2)
+	sm123  = sets.NewSetInterface(mockTypeEquals, m1, m2, m3)
+	sm1234 = sets.NewSetInterface(mockTypeEquals, m1, m2, m3, m4)
 )
 
 func TestSetInterfaceEquals(t *testing.T) {
@@ -47,15 +47,9 @@ func TestSetInterfaceEquals(t *testing.T) {
 		a, b  sets.SetInterface
 		equal bool
 	}{
-		{sme, sme, true},
-		{sme, sm0, false},
-		{sm0, sme, false},
-		{sm0, sm0, true},
-		{sm0, sm1, false},
-		{sm1, sm0, false},
-		{sm1, sm1, true},
-		{sm01, sm10, true},
-		{sm01, sm02, false},
+		{smE, smE, true}, {smE, sm0, false}, {sm0, smE, false},
+		{sm0, sm0, true}, {sm0, sm1, false}, {sm1, sm0, false},
+		{sm1, sm1, true}, {sm01, sm10, true}, {sm01, sm02, false},
 		{sm012, sm01, false},
 	}
 
@@ -71,12 +65,12 @@ func TestSetInterfaceLength(t *testing.T) {
 		values []mockType
 		length int
 	}{
-		{[]mockType{t1}, 1},
-		{[]mockType{t1, t2}, 2},
-		{[]mockType{t1, t1}, 1},
-		{[]mockType{t1, t2, t3}, 3},
-		{[]mockType{t1, t3, t3}, 2},
-		{[]mockType{t2, t2, t2}, 1},
+		{[]mockType{m1}, 1},
+		{[]mockType{m1, m2}, 2},
+		{[]mockType{m1, m1}, 1},
+		{[]mockType{m1, m2, m3}, 3},
+		{[]mockType{m1, m3, m3}, 2},
+		{[]mockType{m2, m2, m2}, 1},
 	}
 
 	for n, tc := range testCases {
@@ -91,23 +85,23 @@ func TestSetInterfaceLength(t *testing.T) {
 }
 
 func TestSetInterfaceContains(t *testing.T) {
-	setValues := []mockType{t0, t1, t2, t3, t4}
+	setValues := []mockType{m0, m1, m2, m3, m4}
 	testCases := []struct {
 		values   []mockType
 		contains []bool
 	}{
-		{[]mockType{t0}, []bool{true, false, false, false, false}},
-		{[]mockType{t1}, []bool{false, true, false, false, false}},
-		{[]mockType{t2}, []bool{false, false, true, false, false}},
-		{[]mockType{t3}, []bool{false, false, false, true, false}},
-		{[]mockType{t4}, []bool{false, false, false, false, true}},
-		{[]mockType{t0, t1}, []bool{true, true, false, false, false}},
-		{[]mockType{t0, t0, t1}, []bool{true, true, false, false, false}},
-		{[]mockType{t0, t0, t0, t1}, []bool{true, true, false, false, false}},
-		{[]mockType{t1, t2, t1}, []bool{false, true, true, false, false}},
-		{[]mockType{t3, t3, t2}, []bool{false, false, true, true, false}},
-		{[]mockType{t4, t3, t2}, []bool{false, false, true, true, true}},
-		{[]mockType{t4, t2, t2}, []bool{false, false, true, false, true}},
+		{[]mockType{m0}, []bool{true, false, false, false, false}},
+		{[]mockType{m1}, []bool{false, true, false, false, false}},
+		{[]mockType{m2}, []bool{false, false, true, false, false}},
+		{[]mockType{m3}, []bool{false, false, false, true, false}},
+		{[]mockType{m4}, []bool{false, false, false, false, true}},
+		{[]mockType{m0, m1}, []bool{true, true, false, false, false}},
+		{[]mockType{m0, m0, m1}, []bool{true, true, false, false, false}},
+		{[]mockType{m0, m0, m0, m1}, []bool{true, true, false, false, false}},
+		{[]mockType{m1, m2, m1}, []bool{false, true, true, false, false}},
+		{[]mockType{m3, m3, m2}, []bool{false, false, true, true, false}},
+		{[]mockType{m4, m3, m2}, []bool{false, false, true, true, true}},
+		{[]mockType{m4, m2, m2}, []bool{false, false, true, false, true}},
 	}
 
 	for n, tc := range testCases {
@@ -127,12 +121,8 @@ func TestSetInterfaceUnion(t *testing.T) {
 	testCases := []struct {
 		a, b, u sets.SetInterface
 	}{
-		{sm12, sm34, sm1234},
-		{sm12, sm23, sm123},
-		{sm12, sm12, sm12},
-		{sm12, sm1, sm12},
-		{sm12, sme, sm12},
-		{sme, sme, sme},
+		{sm12, sm34, sm1234}, {sm12, sm23, sm123}, {sm12, sm12, sm12},
+		{sm12, sm1, sm12}, {sm12, smE, sm12}, {smE, smE, smE},
 	}
 
 	for n, tc := range testCases {
@@ -146,12 +136,8 @@ func TestSetInterfaceIntersection(t *testing.T) {
 	testCases := []struct {
 		a, b, u sets.SetInterface
 	}{
-		{sm12, sm34, sme},
-		{sm12, sm23, sm2},
-		{sm12, sm12, sm12},
-		{sm12, sm1, sm1},
-		{sm12, sme, sme},
-		{sme, sme, sme},
+		{sm12, sm34, smE}, {sm12, sm23, sm2}, {sm12, sm12, sm12},
+		{sm12, sm1, sm1}, {sm12, smE, smE}, {smE, smE, smE},
 	}
 
 	for n, tc := range testCases {

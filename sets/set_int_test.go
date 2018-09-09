@@ -6,19 +6,19 @@ import (
 )
 
 var (
-	se    = sets.NewSetInt()
-	s0    = sets.NewSetInt(0)
-	s1    = sets.NewSetInt(1)
-	s2    = sets.NewSetInt(2)
-	s01   = sets.NewSetInt(0, 1)
-	s10   = sets.NewSetInt(1, 0)
-	s02   = sets.NewSetInt(0, 2)
-	s12   = sets.NewSetInt(1, 2)
-	s23   = sets.NewSetInt(2, 3)
-	s34   = sets.NewSetInt(3, 4)
-	s012  = sets.NewSetInt(0, 1, 2)
-	s123  = sets.NewSetInt(1, 2, 3)
-	s1234 = sets.NewSetInt(1, 2, 3, 4)
+	siE    = sets.NewSetInt()
+	si0    = sets.NewSetInt(0)
+	si1    = sets.NewSetInt(1)
+	si2    = sets.NewSetInt(2)
+	si01   = sets.NewSetInt(0, 1)
+	si10   = sets.NewSetInt(1, 0)
+	si02   = sets.NewSetInt(0, 2)
+	si12   = sets.NewSetInt(1, 2)
+	si23   = sets.NewSetInt(2, 3)
+	si34   = sets.NewSetInt(3, 4)
+	si012  = sets.NewSetInt(0, 1, 2)
+	si123  = sets.NewSetInt(1, 2, 3)
+	si1234 = sets.NewSetInt(1, 2, 3, 4)
 )
 
 func TestSetIntEquals(t *testing.T) {
@@ -26,16 +26,10 @@ func TestSetIntEquals(t *testing.T) {
 		a, b  sets.SetInt
 		equal bool
 	}{
-		{se, se, true},
-		{se, s0, false},
-		{s0, se, false},
-		{s0, s0, true},
-		{s0, s1, false},
-		{s1, s0, false},
-		{s1, s1, true},
-		{s01, s10, true},
-		{s01, s02, false},
-		{s012, s01, false},
+		{siE, siE, true}, {siE, si0, false}, {si0, siE, false},
+		{si0, si0, true}, {si0, si1, false}, {si1, si0, false},
+		{si1, si1, true}, {si01, si10, true}, {si01, si02, false},
+		{si012, si01, false},
 	}
 
 	for n, tc := range testCases {
@@ -50,12 +44,8 @@ func TestSetIntLength(t *testing.T) {
 		values []int
 		length int
 	}{
-		{[]int{1}, 1},
-		{[]int{1, 2}, 2},
-		{[]int{1, 1}, 1},
-		{[]int{1, 2, 3}, 3},
-		{[]int{1, 3, 3}, 2},
-		{[]int{2, 2, 2}, 1},
+		{[]int{1}, 1}, {[]int{1, 2}, 2}, {[]int{1, 1}, 1},
+		{[]int{1, 2, 3}, 3}, {[]int{1, 3, 3}, 2}, {[]int{2, 2, 2}, 1},
 	}
 
 	for n, tc := range testCases {
@@ -99,12 +89,8 @@ func TestSetUnion(t *testing.T) {
 	testCases := []struct {
 		a, b, u sets.SetInt
 	}{
-		{s12, s34, s1234},
-		{s12, s23, s123},
-		{s12, s12, s12},
-		{s12, s1, s12},
-		{s12, se, s12},
-		{se, se, se},
+		{si12, si34, si1234}, {si12, si23, si123}, {si12, si12, si12},
+		{si12, si1, si12}, {si12, siE, si12}, {siE, siE, siE},
 	}
 
 	for n, tc := range testCases {
@@ -118,12 +104,8 @@ func TestSetIntersection(t *testing.T) {
 	testCases := []struct {
 		a, b, u sets.SetInt
 	}{
-		{s12, s34, se},
-		{s12, s23, s2},
-		{s12, s12, s12},
-		{s12, s1, s1},
-		{s12, se, se},
-		{se, se, se},
+		{si12, si34, siE}, {si12, si23, si2}, {si12, si12, si12},
+		{si12, si1, si1}, {si12, siE, siE}, {siE, siE, siE},
 	}
 
 	for n, tc := range testCases {
