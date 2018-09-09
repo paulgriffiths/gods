@@ -11,6 +11,11 @@ func (s SetInt) IsEmpty() bool {
 	return false
 }
 
+// EmptySet returns the empty set
+func EmptySet() SetInt {
+	return SetInt{}
+}
+
 // Equals tests if two sets contain the same members
 func (s SetInt) Equals(other SetInt) bool {
 	if len(s) != len(other) {
