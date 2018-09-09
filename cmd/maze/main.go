@@ -16,26 +16,26 @@ func main() {
 	p := flag.Bool("p", false, "show path through maze")
 	flag.Parse()
 
-    argError := false
-    if *x < 2 {
-        fmt.Fprintf(os.Stderr, "%s: x dimension must be at least 2\n",
-            os.Args[0])
-        argError = true
-    }
-    if *y < 2 {
-        fmt.Fprintf(os.Stderr, "%s: y dimension must be at least 2\n",
-            os.Args[0])
-        argError = true
-    }
-    if *c < 6 {
-        fmt.Fprintf(os.Stderr, "%s: cell dimension must be at least 6\n",
-            os.Args[0])
-        argError = true
-    }
+	argError := false
+	if *x < 2 {
+		fmt.Fprintf(os.Stderr, "%s: x dimension must be at least 2\n",
+			os.Args[0])
+		argError = true
+	}
+	if *y < 2 {
+		fmt.Fprintf(os.Stderr, "%s: y dimension must be at least 2\n",
+			os.Args[0])
+		argError = true
+	}
+	if *c < 6 {
+		fmt.Fprintf(os.Stderr, "%s: cell dimension must be at least 6\n",
+			os.Args[0])
+		argError = true
+	}
 
-    if argError {
-        os.Exit(1)
-    }
+	if argError {
+		os.Exit(1)
+	}
 
 	m := newMaze(*x, *y, *c)
 	g := m.toGraph()

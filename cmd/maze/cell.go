@@ -21,10 +21,10 @@ func (c *cell) corner(n cornerValue) point {
 }
 
 func (c *cell) box() box {
-    return box{
-        point{c.corner(topLeft).x, c.corner(topLeft).y},
-        point{c.corner(bottomRight).x, c.corner(bottomRight).y},
-    }
+	return box{
+		point{c.corner(topLeft).x, c.corner(topLeft).y},
+		point{c.corner(bottomRight).x, c.corner(bottomRight).y},
+	}
 }
 
 // hasAttr returns true if the cell has the specified attribute set.

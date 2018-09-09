@@ -173,8 +173,8 @@ func drawLine(img *image.Paletted, p point, length int,
 
 // box represents a box.
 type box struct {
-    topLeft point
-    bottomRight point
+	topLeft     point
+	bottomRight point
 }
 
 // drawBox draws a solid box in the specified color.
@@ -189,48 +189,48 @@ func drawBox(img *image.Paletted, b box, color uint8) {
 // insetBox returns a box derived from the provided box, with the edges
 // inset by the specified amounts.
 func insetBox(b box, top, right, bottom, left int) box {
-    return box{
-        point{b.topLeft.x + left, b.topLeft.y + top},
-        point{b.bottomRight.x - right, b.bottomRight.y - bottom},
-    }
+	return box{
+		point{b.topLeft.x + left, b.topLeft.y + top},
+		point{b.bottomRight.x - right, b.bottomRight.y - bottom},
+	}
 }
 
 // drawPath draws a path marker in the center of a cell.
 func drawPath(img *image.Paletted, c, from, to *cell, color uint8) {
 	off := c.size / 3
-    if from == nil && to == nil {
-        drawBox(img, insetBox(c.box(), off, off, off, off), color)
-        return
-    }
+	if from == nil && to == nil {
+		drawBox(img, insetBox(c.box(), off, off, off, off), color)
+		return
+	}
 
-    if from != nil {
-        if c.isAdjacent(from, north) {
-            drawBox(img, insetBox(c.box(), off, off, 0, off), color)
-        }
-        if c.isAdjacent(from, east) {
-            drawBox(img, insetBox(c.box(), off, off, off, 0), color)
-        }
-        if c.isAdjacent(from, south) {
-            drawBox(img, insetBox(c.box(), 0, off, off, off), color)
-        }
-        if c.isAdjacent(from, west) {
-            drawBox(img, insetBox(c.box(), off, 0, off, off), color)
-        }
-    }
-    if to != nil {
-        if c.isAdjacent(to, north) {
-            drawBox(img, insetBox(c.box(), off, off, 0, off), color)
-        }
-        if c.isAdjacent(to, east) {
-            drawBox(img, insetBox(c.box(), off, off, off, 0), color)
-        }
-        if c.isAdjacent(to, south) {
-            drawBox(img, insetBox(c.box(), 0, off, off, off), color)
-        }
-        if c.isAdjacent(to, west) {
-            drawBox(img, insetBox(c.box(), off, 0, off, off), color)
-        }
-    }
+	if from != nil {
+		if c.isAdjacent(from, north) {
+			drawBox(img, insetBox(c.box(), off, off, 0, off), color)
+		}
+		if c.isAdjacent(from, east) {
+			drawBox(img, insetBox(c.box(), off, off, off, 0), color)
+		}
+		if c.isAdjacent(from, south) {
+			drawBox(img, insetBox(c.box(), 0, off, off, off), color)
+		}
+		if c.isAdjacent(from, west) {
+			drawBox(img, insetBox(c.box(), off, 0, off, off), color)
+		}
+	}
+	if to != nil {
+		if c.isAdjacent(to, north) {
+			drawBox(img, insetBox(c.box(), off, off, 0, off), color)
+		}
+		if c.isAdjacent(to, east) {
+			drawBox(img, insetBox(c.box(), off, off, off, 0), color)
+		}
+		if c.isAdjacent(to, south) {
+			drawBox(img, insetBox(c.box(), 0, off, off, off), color)
+		}
+		if c.isAdjacent(to, west) {
+			drawBox(img, insetBox(c.box(), off, 0, off, off), color)
+		}
+	}
 }
 
 // image returns an image representation of the maze.
@@ -272,17 +272,17 @@ func (m maze) image(vl graphs.VertexList) image.Image {
 
 	if vl != nil {
 		for n, v := range vl {
-            var from, to *cell
-            if n == 0 {
-                from = nil
-            } else {
-                from = m.cell(int(vl[n - 1]))
-            }
-            if n == len(vl) - 1 {
-                to = nil
-            } else {
-                to = m.cell(int(vl[n + 1]))
-            }
+			var from, to *cell
+			if n == 0 {
+				from = nil
+			} else {
+				from = m.cell(int(vl[n-1]))
+			}
+			if n == len(vl)-1 {
+				to = nil
+			} else {
+				to = m.cell(int(vl[n+1]))
+			}
 			c := m.cell(int(v))
 			drawPath(img, c, from, to, redIndex)
 		}
