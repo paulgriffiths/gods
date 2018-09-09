@@ -10,10 +10,11 @@ type SetInterface struct {
 // provided equality function.
 func NewSetInterface(eqFunc func(a, b interface{}) bool,
 	values ...interface{}) SetInterface {
-	if values == nil {
-		return SetInterface{[]interface{}{}, eqFunc}
+	newSet := SetInterface{[]interface{}{}, eqFunc}
+	for _, value := range values {
+		newSet.Insert(value)
 	}
-	return SetInterface{values, eqFunc}
+	return newSet
 }
 
 // IsEmpty returns true if a set is the empty set.
@@ -38,7 +39,7 @@ func (s SetInterface) Elements() []interface{} {
 	return list
 }
 
-// Equals tests if two sets contain the same members
+// Equals tests if two sets contain the same elements
 func (s SetInterface) Equals(other SetInterface) bool {
 	if s.Length() != other.Length() {
 		return false
@@ -51,7 +52,7 @@ func (s SetInterface) Equals(other SetInterface) bool {
 	return true
 }
 
-// Contains returns true if the set contains the specified integer.
+// Contains returns true if the set contains the specified element.
 func (s SetInterface) Contains(e interface{}) bool {
 	for _, element := range s.elems {
 		if s.eqFunc(element, e) {
@@ -61,7 +62,7 @@ func (s SetInterface) Contains(e interface{}) bool {
 	return false
 }
 
-// Insert inserts an integer into a set if it isn't already in the set.
+// Insert inserts an element into a set if it isn't already in the set.
 func (s *SetInterface) Insert(e interface{}) {
 	if !s.Contains(e) {
 		s.elems = append(s.elems, e)
