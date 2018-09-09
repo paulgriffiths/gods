@@ -2,30 +2,25 @@ package queues
 
 // QueueInt implements a queue of int elements.
 type QueueInt struct {
-	elems []int
+	queue QueueInterface
 }
 
 // NewQueueInt creates a new queue of int elements.
 func NewQueueInt() QueueInt {
-	return QueueInt{[]int{}}
+	return QueueInt{NewQueueInterface()}
 }
 
 // Enqueue enqueues an int to a queue.
 func (q *QueueInt) Enqueue(n int) {
-	q.elems = append(q.elems, n)
+	q.queue.Enqueue(n)
 }
 
 // Dequeue dequeues an int from a queue.
 func (q *QueueInt) Dequeue() int {
-	if q.IsEmpty() {
-		panic("queue is empty")
-	}
-	n := q.elems[0]
-	q.elems = q.elems[1:len(q.elems)]
-	return n
+	return q.queue.Dequeue().(int)
 }
 
 // IsEmpty returns true if the queue is empty, otherwise false.
 func (q *QueueInt) IsEmpty() bool {
-	return len(q.elems) == 0
+	return q.queue.IsEmpty()
 }

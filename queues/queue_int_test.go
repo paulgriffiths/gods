@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-func TestEmptyQueueInt(t *testing.T) {
+func TestQueueIntEmpty(t *testing.T) {
 	q := queues.NewQueueInt()
 	if !q.IsEmpty() {
 		t.Errorf("queue is not empty")
 	}
 }
 
-func TestEnqueueNotEmptyQueueInt(t *testing.T) {
+func TestQueueIntEnqueueNotEmpty(t *testing.T) {
 	q := queues.NewQueueInt()
 	q.Enqueue(42)
 	if q.IsEmpty() {
@@ -20,7 +20,7 @@ func TestEnqueueNotEmptyQueueInt(t *testing.T) {
 	}
 }
 
-func TestEnqueueDequeue(t *testing.T) {
+func TestQueueIntEnqueueDequeue(t *testing.T) {
 	ops := []struct {
 		op    string
 		value int
