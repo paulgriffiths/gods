@@ -7,7 +7,6 @@ Pearson Education, Inc.
 package nfa_test
 
 import (
-	_ "fmt"
 	"github.com/paulgriffiths/gods/automata/nfa"
 	"github.com/paulgriffiths/gods/sets"
 	"testing"
@@ -19,28 +18,28 @@ func TestNfaEclosure1(t *testing.T) {
 		6,
 		[]rune{'0', '1'},
 		[]map[rune]sets.SetInt{
-			{0: {1, 2}},
-			{'0': {2}},
-			{'0': {1}},
-			{'0': {4}},
-			{'0': {5}},
-			{'0': {3}},
+			{0: sets.NewSetInt(1, 2)},
+			{'0': sets.NewSetInt(2)},
+			{'0': sets.NewSetInt(1)},
+			{'0': sets.NewSetInt(4)},
+			{'0': sets.NewSetInt(5)},
+			{'0': sets.NewSetInt(3)},
 		},
 		0,
-		sets.SetInt{1, 3},
+		sets.NewSetInt(1, 3),
 	}
 
 	testCases := []sets.SetInt{
-		sets.SetInt{0, 1, 2},
-		sets.SetInt{1},
-		sets.SetInt{2},
-		sets.SetInt{3},
-		sets.SetInt{4},
-		sets.SetInt{5},
+		sets.NewSetInt(0, 1, 2),
+		sets.NewSetInt(1),
+		sets.NewSetInt(2),
+		sets.NewSetInt(3),
+		sets.NewSetInt(4),
+		sets.NewSetInt(5),
 	}
 
 	for i, tc := range testCases {
-		s := n.Eclosure(sets.SetInt{i})
+		s := n.Eclosure(sets.NewSetInt(i))
 		if !s.Equals(tc) {
 			t.Errorf("case %d, got %v, want %v", i+1, s, tc)
 		}
@@ -53,38 +52,38 @@ func TestNfaEclosure2(t *testing.T) {
 		11,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{0: {1, 7}},
-			{0: {2, 4}},
-			{'a': {3}},
-			{0: {6}},
-			{'b': {5}},
-			{0: {6}},
-			{0: {1, 7}},
-			{'a': {8}},
-			{'b': {9}},
-			{'b': {10}},
+			{0: sets.NewSetInt(1, 7)},
+			{0: sets.NewSetInt(2, 4)},
+			{'a': sets.NewSetInt(3)},
+			{0: sets.NewSetInt(6)},
+			{'b': sets.NewSetInt(5)},
+			{0: sets.NewSetInt(6)},
+			{0: sets.NewSetInt(1, 7)},
+			{'a': sets.NewSetInt(8)},
+			{'b': sets.NewSetInt(9)},
+			{'b': sets.NewSetInt(10)},
 			{},
 		},
 		0,
-		sets.SetInt{10},
+		sets.NewSetInt(10),
 	}
 
 	testCases := []sets.SetInt{
-		sets.SetInt{0, 1, 2, 4, 7},
-		sets.SetInt{1, 2, 4},
-		sets.SetInt{2},
-		sets.SetInt{1, 2, 3, 4, 6, 7},
-		sets.SetInt{4},
-		sets.SetInt{1, 2, 4, 5, 6, 7},
-		sets.SetInt{1, 2, 4, 6, 7},
-		sets.SetInt{7},
-		sets.SetInt{8},
-		sets.SetInt{9},
-		sets.SetInt{10},
+		sets.NewSetInt(0, 1, 2, 4, 7),
+		sets.NewSetInt(1, 2, 4),
+		sets.NewSetInt(2),
+		sets.NewSetInt(1, 2, 3, 4, 6, 7),
+		sets.NewSetInt(4),
+		sets.NewSetInt(1, 2, 4, 5, 6, 7),
+		sets.NewSetInt(1, 2, 4, 6, 7),
+		sets.NewSetInt(7),
+		sets.NewSetInt(8),
+		sets.NewSetInt(9),
+		sets.NewSetInt(10),
 	}
 
 	for i, tc := range testCases {
-		s := n.Eclosure(sets.SetInt{i})
+		s := n.Eclosure(sets.NewSetInt(i))
 		if !s.Equals(tc) {
 			t.Errorf("case %d, got %v, want %v", i+1, s, tc)
 		}
@@ -98,13 +97,13 @@ func TestNfa1(t *testing.T) {
 		4,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{'a': {0, 1}, 'b': {0}},
-			{'b': {2}},
-			{'b': {3}},
+			{'a': sets.NewSetInt(0, 1), 'b': sets.NewSetInt(0)},
+			{'b': sets.NewSetInt(2)},
+			{'b': sets.NewSetInt(3)},
 			{},
 		},
 		0,
-		sets.SetInt{3},
+		sets.NewSetInt(3),
 	}
 
 	testCases := []struct {
@@ -159,14 +158,14 @@ func TestNfa2(t *testing.T) {
 		5,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{0: {1, 3}},
-			{'a': {2}},
-			{'a': {2}},
-			{'b': {4}},
-			{'b': {4}},
+			{0: sets.NewSetInt(1, 3)},
+			{'a': sets.NewSetInt(2)},
+			{'a': sets.NewSetInt(2)},
+			{'b': sets.NewSetInt(4)},
+			{'b': sets.NewSetInt(4)},
 		},
 		0,
-		sets.SetInt{2, 4},
+		sets.NewSetInt(2, 4),
 	}
 
 	testCases := []struct {
@@ -209,13 +208,17 @@ func TestNfa3(t *testing.T) {
 		4,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{'a': {0, 1}, 'b': {0}},
-			{'a': {1, 2}, 'b': {1}},
-			{0: {0}, 'a': {2}, 'b': {2, 3}},
+			{'a': sets.NewSetInt(0, 1), 'b': sets.NewSetInt(0)},
+			{'a': sets.NewSetInt(1, 2), 'b': sets.NewSetInt(1)},
+			{
+				0:   sets.NewSetInt(0),
+				'a': sets.NewSetInt(2),
+				'b': sets.NewSetInt(2, 3),
+			},
 			{},
 		},
 		0,
-		sets.SetInt{3},
+		sets.NewSetInt(3),
 	}
 
 	testCases := []struct {
@@ -260,13 +263,13 @@ func TestNfa4(t *testing.T) {
 		4,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{0: {3}, 'a': {1}},
-			{0: {0}, 'b': {2}},
-			{0: {1}, 'b': {3}},
-			{0: {2}, 'a': {0}},
+			{0: sets.NewSetInt(3), 'a': sets.NewSetInt(1)},
+			{0: sets.NewSetInt(0), 'b': sets.NewSetInt(2)},
+			{0: sets.NewSetInt(1), 'b': sets.NewSetInt(3)},
+			{0: sets.NewSetInt(2), 'a': sets.NewSetInt(0)},
 		},
 		0,
-		sets.SetInt{3},
+		sets.NewSetInt(3),
 	}
 
 	testCases := []struct {
@@ -310,13 +313,13 @@ func TestNfa5(t *testing.T) {
 		4,
 		[]rune{'0', '1'},
 		[]map[rune]sets.SetInt{
-			{'0': {0}, '1': {0, 1}},
-			{0: {2}, '0': {2}},
-			{'1': {3}},
-			{'0': {3}, '1': {3}},
+			{'0': sets.NewSetInt(0), '1': sets.NewSetInt(0, 1)},
+			{0: sets.NewSetInt(2), '0': sets.NewSetInt(2)},
+			{'1': sets.NewSetInt(3)},
+			{'0': sets.NewSetInt(3), '1': sets.NewSetInt(3)},
 		},
 		0,
-		sets.SetInt{3},
+		sets.NewSetInt(3),
 	}
 
 	testCases := []struct {
@@ -358,13 +361,13 @@ func TestNfa6(t *testing.T) {
 		4,
 		[]rune{'0', '1'},
 		[]map[rune]sets.SetInt{
-			{'0': {0}, '1': {0, 1}},
-			{'0': {2}, '1': {2}},
-			{'0': {3}, '1': {3}},
+			{'0': sets.NewSetInt(0), '1': sets.NewSetInt(0, 1)},
+			{'0': sets.NewSetInt(2), '1': sets.NewSetInt(2)},
+			{'0': sets.NewSetInt(3), '1': sets.NewSetInt(3)},
 			{},
 		},
 		0,
-		sets.SetInt{3},
+		sets.NewSetInt(3),
 	}
 
 	testCases := []struct {
@@ -405,15 +408,15 @@ func TestNfa7(t *testing.T) {
 		6,
 		[]rune{'0', '1'},
 		[]map[rune]sets.SetInt{
-			{0: {1, 3}},
-			{'0': {2}},
-			{'0': {1}},
-			{'0': {4}},
-			{'0': {5}},
-			{'0': {3}},
+			{0: sets.NewSetInt(1, 3)},
+			{'0': sets.NewSetInt(2)},
+			{'0': sets.NewSetInt(1)},
+			{'0': sets.NewSetInt(4)},
+			{'0': sets.NewSetInt(5)},
+			{'0': sets.NewSetInt(3)},
 		},
 		0,
-		sets.SetInt{1, 3},
+		sets.NewSetInt(1, 3),
 	}
 
 	testCases := []struct {
@@ -446,12 +449,12 @@ func TestNfa8(t *testing.T) {
 		3,
 		[]rune{'a', 'b'},
 		[]map[rune]sets.SetInt{
-			{0: {2}, 'b': {1}},
-			{'a': {1, 2}, 'b': {2}},
-			{'a': {0}},
+			{0: sets.NewSetInt(2), 'b': sets.NewSetInt(1)},
+			{'a': sets.NewSetInt(1, 2), 'b': sets.NewSetInt(2)},
+			{'a': sets.NewSetInt(0)},
 		},
 		0,
-		sets.SetInt{0},
+		sets.NewSetInt(0),
 	}
 
 	testCases := []struct {

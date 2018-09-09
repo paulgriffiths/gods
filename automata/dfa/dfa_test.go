@@ -6,6 +6,7 @@ package dfa_test
 
 import (
 	"github.com/paulgriffiths/gods/automata/dfa"
+	"github.com/paulgriffiths/gods/sets"
 	"testing"
 )
 
@@ -23,7 +24,7 @@ func TestM1(t *testing.T) {
 			{'0': 1, '1': 1},
 		},
 		0,
-		[]int{1},
+		sets.NewSetInt(1),
 	}
 
 	testCases := []struct {
@@ -69,7 +70,7 @@ func TestM2(t *testing.T) {
 			{'0': 0, '1': 1},
 		},
 		0,
-		[]int{1},
+		sets.NewSetInt(1),
 	}
 
 	testCases := []struct {
@@ -116,7 +117,7 @@ func TestM3(t *testing.T) {
 			{'0': 0, '1': 1},
 		},
 		0,
-		[]int{0},
+		sets.NewSetInt(0),
 	}
 
 	testCases := []struct {
@@ -166,7 +167,7 @@ func TestM4(t *testing.T) {
 			{'a': 4, 'b': 3},
 		},
 		0,
-		[]int{1, 3},
+		sets.NewSetInt(1, 3),
 	}
 
 	testCases := []struct {
@@ -213,7 +214,7 @@ func TestM5(t *testing.T) {
 			{'.': 0, '0': 2, '1': 0, '2': 1},
 		},
 		0,
-		[]int{0},
+		sets.NewSetInt(0),
 	}
 
 	testCases := []struct {
