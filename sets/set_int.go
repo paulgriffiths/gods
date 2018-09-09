@@ -1,14 +1,14 @@
 package sets
 
-// SetInt implements a set of integers
+// SetInt implements a set of integers.
 type SetInt struct {
 	set SetInterface
 }
 
-// NewSetInt creates a new set of integers.
+// NewSetInt creates a new set of integers with optional initial elements.
 func NewSetInt(values ...int) SetInt {
 	newSet := NewSetInterface(func(a, b interface{}) bool {
-		return a == b
+		return a.(int) == b.(int)
 	})
 	for _, value := range values {
 		newSet.Insert(value)
@@ -29,8 +29,8 @@ func (s SetInt) Length() int {
 // Elements returns an array of the elements in the set.
 func (s SetInt) Elements() []int {
 	list := []int{}
-	for _, e := range s.set.Elements() {
-		list = append(list, e.(int))
+	for _, elem := range s.set.Elements() {
+		list = append(list, elem.(int))
 	}
 	return list
 }

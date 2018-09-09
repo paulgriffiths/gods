@@ -58,8 +58,7 @@ func TestQueueInterfaceEnqueueDequeue(t *testing.T) {
 		case "enqueue":
 			q.Enqueue(op.value)
 		case "dequeue":
-			c := q.Dequeue().(mockType)
-			if !c.Equals(op.value) {
+			if c := q.Dequeue().(mockType); !c.Equals(op.value) {
 				t.Errorf("got %v, want %v", c, op.value)
 			}
 		}

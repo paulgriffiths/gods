@@ -49,8 +49,7 @@ func TestQueueRuneEnqueueDequeue(t *testing.T) {
 		case "enqueue":
 			q.Enqueue(op.value)
 		case "dequeue":
-			c := q.Dequeue()
-			if c != op.value {
+			if c := q.Dequeue(); c != op.value {
 				t.Errorf("got %q, want %q", c, op.value)
 			}
 		}

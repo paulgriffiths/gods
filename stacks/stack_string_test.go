@@ -49,8 +49,7 @@ func TestStackStringPushPop(t *testing.T) {
 		case "push":
 			s.Push(op.value)
 		case "pop":
-			c := s.Pop()
-			if c != op.value {
+			if c := s.Pop(); c != op.value {
 				t.Errorf("got %s, want %s", c, op.value)
 			}
 		}

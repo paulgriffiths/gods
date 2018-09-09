@@ -58,8 +58,7 @@ func TestStackInterfacePushPop(t *testing.T) {
 		case "push":
 			s.Push(op.value)
 		case "pop":
-			c := s.Pop().(mockType)
-			if !c.Equals(op.value) {
+			if c := s.Pop().(mockType); !c.Equals(op.value) {
 				t.Errorf("got %v, want %v", c, op.value)
 			}
 		}
