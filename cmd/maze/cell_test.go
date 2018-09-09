@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"github.com/paulgriffiths/gods/geometry"
+	"testing"
+)
 
 var m maze
 
@@ -48,7 +51,7 @@ func TestCellValues(t *testing.T) {
 	}
 
 	for _, i := range inputs {
-		c := m.cell(m.index(point{i.x, i.y}))
+		c := m.cell(m.index(geometry.Point{i.x, i.y}))
 		if c.value != i.value {
 			t.Errorf("got %v, want %v", c.value, i.value)
 		}
@@ -71,7 +74,7 @@ func TestCellEarthNeighbors(t *testing.T) {
 		{2, 2, []byte{b[7]}},
 	}
 	for _, i := range inputs {
-		c := m.cell(m.index(point{i.x, i.y}))
+		c := m.cell(m.index(geometry.Point{i.x, i.y}))
 		n := m.earthNeighbors(c)
 		for j := range n {
 			if n[j].value != i.vals[j] {

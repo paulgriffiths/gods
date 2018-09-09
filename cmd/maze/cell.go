@@ -1,30 +1,23 @@
 package main
 
+import "github.com/paulgriffiths/gods/geometry"
+
 // cell implements a cell within a maze.
 type cell struct {
-	point
+	geometry.Point
 	size  int
 	value byte
 }
 
-func (c *cell) corner(n cornerValue) point {
-	x := c.x * c.size
-	y := c.y * c.size
-	z := c.size - 1
-	if n == topRight || n == bottomRight {
-		x += z
-	}
-	if n == bottomLeft || n == bottomRight {
-		y += z
-	}
-	return point{x, y}
+func (c *cell) corner(cnr geometry.Corner) geometry.Point {
+	return c.rect().Corner(cnr)
 }
 
-func (c *cell) box() box {
-	return box{
-		point{c.corner(topLeft).x, c.corner(topLeft).y},
-		point{c.corner(bottomRight).x, c.corner(bottomRight).y},
-	}
+func (c *cell) rect() geometry.Rect {
+	v := geometry.Vector{c.size - 1, c.size - 1}
+	topLeft := c.Point.Scale(c.size)
+	bottomRight := topLeft.Translate(v)
+	return geometry.Rect{topLeft, bottomRight}
 }
 
 // hasAttr returns true if the cell has the specified attribute set.
@@ -34,16 +27,16 @@ func (c *cell) hasAttr(b byte) bool {
 
 // isAdjacent returns true if the cell is adjacent, on the specified
 // side, to the other cell.
-func (c *cell) isAdjacent(other *cell, d direction) bool {
+func (c *cell) isAdjacent(other *cell, d geometry.Direction) bool {
 	switch d {
-	case north:
-		return c.x == other.x && c.y-other.y == -1
-	case east:
-		return c.x-other.x == 1 && c.y == other.y
-	case south:
-		return c.x == other.x && c.y-other.y == 1
-	case west:
-		return c.x-other.x == -1 && c.y == other.y
+	case geometry.North:
+		return c.X == other.X && c.Y-other.Y == -1
+	case geometry.East:
+		return c.X-other.X == 1 && c.Y == other.Y
+	case geometry.South:
+		return c.X == other.X && c.Y-other.Y == 1
+	case geometry.West:
+		return c.X-other.X == -1 && c.Y == other.Y
 	}
 	return false
 }
