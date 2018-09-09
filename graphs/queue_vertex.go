@@ -1,31 +1,28 @@
 package graphs
 
-// QueueVertex implements a queue of Vertex elements.
+import "github.com/paulgriffiths/gods/queues"
+
+// QueueVertex implements a queue of vertex elements.
 type QueueVertex struct {
-	elems []Vertex
+	queue queues.QueueInterface
 }
 
-// NewQueueVertex creates a new queue of Vertex elements.
+// NewQueueVertex creates a new queue of vertex elements.
 func NewQueueVertex() QueueVertex {
-	return QueueVertex{[]Vertex{}}
+	return QueueVertex{queues.NewQueueInterface()}
 }
 
-// Enqueue enqueues an Vertex to a queue.
+// Enqueue enqueues an vertex to a queue.
 func (q *QueueVertex) Enqueue(n Vertex) {
-	q.elems = append(q.elems, n)
+	q.queue.Enqueue(n)
 }
 
-// Dequeue dequeues an Vertex from a queue.
+// Dequeue dequeues an vertex from a queue.
 func (q *QueueVertex) Dequeue() Vertex {
-	if q.IsEmpty() {
-		panic("queue is empty")
-	}
-	n := q.elems[0]
-	q.elems = q.elems[1:len(q.elems)]
-	return n
+	return q.queue.Dequeue().(Vertex)
 }
 
 // IsEmpty returns true if the queue is empty, otherwise false.
 func (q *QueueVertex) IsEmpty() bool {
-	return len(q.elems) == 0
+	return q.queue.IsEmpty()
 }

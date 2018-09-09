@@ -1,31 +1,28 @@
 package graphs
 
-// StackVertex implements a stack of Vertex elements.
+import "github.com/paulgriffiths/gods/stacks"
+
+// StackVertex implements a stack of vertex elements.
 type StackVertex struct {
-	elems []Vertex
+	stack stacks.StackInterface
 }
 
-// NewStackVertex creates a new stack of Vertex elements.
+// NewStackVertex creates a new stack of vertex elements.
 func NewStackVertex() StackVertex {
-	return StackVertex{[]Vertex{}}
+	return StackVertex{stacks.NewStackInterface()}
 }
 
-// Push pushes a new Vertex element onto the stack.
+// Push pushes a new vertex element onto the stack.
 func (s *StackVertex) Push(n Vertex) {
-	s.elems = append(s.elems, n)
+	s.stack.Push(n)
 }
 
-// Pop pops the top Vertex element from the stack.
+// Pop pops the top vertex element from the stack.
 func (s *StackVertex) Pop() Vertex {
-	if len(s.elems) == 0 {
-		panic("stack underflow")
-	}
-	n := s.elems[len(s.elems)-1]
-	s.elems = s.elems[:len(s.elems)-1]
-	return n
+	return s.stack.Pop().(Vertex)
 }
 
 // IsEmpty returns true if the stack is empty, otherwise false.
 func (s *StackVertex) IsEmpty() bool {
-	return len(s.elems) == 0
+	return s.stack.IsEmpty()
 }
