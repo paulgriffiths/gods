@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-func TestEmptyStackInt(t *testing.T) {
+func TestStackIntEmpty(t *testing.T) {
 	s := stacks.NewStackInt()
 	if !s.IsEmpty() {
 		t.Errorf("stack is not empty")
 	}
 }
 
-func TestPushNotEmptyStackInt(t *testing.T) {
+func TestStackIntPushNotEmpty(t *testing.T) {
 	s := stacks.NewStackInt()
 	s.Push(42)
 	if s.IsEmpty() {
@@ -20,7 +20,7 @@ func TestPushNotEmptyStackInt(t *testing.T) {
 	}
 }
 
-func TestPushPop(t *testing.T) {
+func TestStackIntPushPop(t *testing.T) {
 	ops := []struct {
 		op    string
 		value int
