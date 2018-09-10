@@ -121,12 +121,12 @@ func (m maze) earthNeighbors(c *cell) []*cell {
 	return nbs
 }
 
-// index converts x, y coordinates into the index of the maze's
-// cell array.
+// index converts a Point to an index of the maze's cell array.
 func (m maze) index(p geometry.Point) int {
 	return p.Y*m.X + p.X
 }
 
+// indexPoint converts a maze cell array index to a Point.
 func (m maze) indexPoint(i int) geometry.Point {
 	return geometry.Point{i % m.X, i / m.X}
 }
@@ -150,75 +150,6 @@ func (m maze) cell(i int) *cell {
 	return &cell{m.indexPoint(i), m.cellSize, m.cells[i]}
 }
 
-// drawLine draws a line of the specified length from the specified
-// point in the specified direction with the specified color.
-func drawLine(img *image.Paletted, p geometry.Point, length int,
-	dir geometry.Direction, color uint8) {
-	var xInc, yInc int
-	switch dir {
-	case geometry.North:
-		xInc, yInc = 0, -1
-	case geometry.East:
-		xInc, yInc = 1, 0
-	case geometry.South:
-		xInc, yInc = 0, 1
-	case geometry.West:
-		xInc, yInc = -1, 0
-	default:
-		panic("unexpected direction")
-	}
-	for i := 0; i < length; i++ {
-		img.SetColorIndex(p.X+xInc*i, p.Y+yInc*i, color)
-	}
-}
-
-// drawBox draws a solid box in the specified color.
-func drawBox(img *image.Paletted, r geometry.Rect, color uint8) {
-	for x := r.TopLeft.X; x <= r.BottomRight.X; x++ {
-		for y := r.TopLeft.Y; y <= r.BottomRight.Y; y++ {
-			img.SetColorIndex(x, y, color)
-		}
-	}
-}
-
-// drawPath draws a path marker in the center of a cell.
-func drawPath(img *image.Paletted, c, from, to *cell, color uint8) {
-	off := c.size / 3
-	if from == nil && to == nil {
-		drawBox(img, c.box().Inset(off, off, off, off), color)
-		return
-	}
-
-	if from != nil {
-		if c.isAdjacent(from, geometry.North) {
-			drawBox(img, c.box().Inset(off, off, 0, off), color)
-		}
-		if c.isAdjacent(from, geometry.East) {
-			drawBox(img, c.box().Inset(off, off, off, 0), color)
-		}
-		if c.isAdjacent(from, geometry.South) {
-			drawBox(img, c.box().Inset(0, off, off, off), color)
-		}
-		if c.isAdjacent(from, geometry.West) {
-			drawBox(img, c.box().Inset(off, 0, off, off), color)
-		}
-	}
-	if to != nil {
-		if c.isAdjacent(to, geometry.North) {
-			drawBox(img, c.box().Inset(off, off, 0, off), color)
-		}
-		if c.isAdjacent(to, geometry.East) {
-			drawBox(img, c.box().Inset(off, off, off, 0), color)
-		}
-		if c.isAdjacent(to, geometry.South) {
-			drawBox(img, c.box().Inset(0, off, off, off), color)
-		}
-		if c.isAdjacent(to, geometry.West) {
-			drawBox(img, c.box().Inset(off, 0, off, off), color)
-		}
-	}
-}
-
 // image returns an image representation of the maze.
 func (m maze) image(vl graphs.VertexList) image.Image {
 	var palette = []color.Color{
@@ -233,45 +164,27 @@ func (m maze) image(vl graphs.VertexList) image.Image {
 		redIndex   = 2
 		greenIndex = 3
 	)
+
 	rect := image.Rect(0, 0, m.cellSize*m.X, m.cellSize*m.Y)
 	img := image.NewPaletted(rect, palette)
 
 	for i := range m.cells {
-		c := m.cell(i)
-		if c.hasAttr(northWall) {
-			drawLine(img, c.corner(geometry.TopLeft), m.cellSize,
-				geometry.East, blackIndex)
-		}
-		if c.hasAttr(eastWall) {
-			drawLine(img, c.corner(geometry.TopRight), m.cellSize,
-				geometry.South, blackIndex)
-		}
-		if c.hasAttr(southWall) {
-			drawLine(img, c.corner(geometry.BottomLeft), m.cellSize,
-				geometry.East, blackIndex)
-		}
-		if c.hasAttr(westWall) {
-			drawLine(img, c.corner(geometry.TopLeft), m.cellSize,
-				geometry.South, blackIndex)
-		}
+		drawCellWalls(img, m.cell(i), blackIndex)
 	}
 
-	if vl != nil {
-		for n, v := range vl {
-			var from, to *cell
-			if n == 0 {
-				from = nil
-			} else {
-				from = m.cell(int(vl[n-1]))
-			}
-			if n == len(vl)-1 {
-				to = nil
-			} else {
-				to = m.cell(int(vl[n+1]))
-			}
-			c := m.cell(int(v))
-			drawPath(img, c, from, to, redIndex)
+	if vl == nil {
+		return img
+	}
+
+	for n, v := range vl {
+		var from, to *cell
+		if n > 0 {
+			from = m.cell(int(vl[n-1]))
 		}
+		if n < len(vl)-1 {
+			to = m.cell(int(vl[n+1]))
+		}
+		drawPath(img, m.cell(int(v)), from, to, redIndex)
 	}
 
 	return img
