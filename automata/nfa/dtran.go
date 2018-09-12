@@ -21,8 +21,8 @@ func (d dtran) length() int {
 	return len(d)
 }
 
-func (d *dtran) appendState(s dstate) {
-	*d = append(*d, s)
+func (d *dtran) appendState(s sets.SetInt) {
+	*d = append(*d, newDstate(s))
 }
 
 func (d dtran) addTrans(from, to int, a rune) {

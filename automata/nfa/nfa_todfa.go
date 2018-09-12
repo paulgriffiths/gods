@@ -15,7 +15,7 @@ func (n Nfa) makeDtran() dtran {
 			if j, yes := ds.stateExists(nextState); yes {
 				ds.addTrans(i, j, letter)
 			} else {
-				ds.appendState(newDstate(nextState))
+				ds.appendState(nextState)
 				ds.addTrans(i, ds.length()-1, letter)
 			}
 		}
