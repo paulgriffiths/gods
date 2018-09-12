@@ -33,12 +33,12 @@ func (n Nfa) ToDfa() dfa.Dfa {
 	accepts := sets.NewSetInt()
 	tfunc := []map[rune]int{}
 
-	for i := 0; i < len(ds); i++ {
+	for i := 0; i < ds.length(); i++ {
 		if !n.Accept.Intersection(ds[i].nfaState).IsEmpty() {
 			accepts.Insert(i)
 		}
 		tfunc = append(tfunc, ds[i].trans)
 	}
 
-	return dfa.Dfa{len(ds), n.S, tfunc, 0, accepts}
+	return dfa.Dfa{ds.length(), n.S, tfunc, 0, accepts}
 }
