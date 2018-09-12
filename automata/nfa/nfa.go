@@ -13,43 +13,54 @@ type Nfa struct {
 
 // Accepts returns true if the NFA accepts the provided string.
 func (n Nfa) Accepts(input string) bool {
-	current := n.Eclosure(sets.NewSetInt(n.Start))
-
+	current := n.EclosureS(n.Start)
 	for _, letter := range input {
-		next := sets.NewSetInt()
-		for _, state := range current.Elements() {
-			if p, ok := n.D[state][letter]; ok {
-				next = next.Union(n.Eclosure(p))
-			}
-		}
-		if current.IsEmpty() {
-			return false
-		}
-		current = next
+		current = n.EclosureT(n.Move(current, letter))
 	}
-
 	return !n.Accept.Intersection(current).IsEmpty()
 }
 
-// Eclosure returns the set of states reachable from the provided
-// set of states on e-transitions alone, including the provided
-// set of states itself.
-func (n Nfa) Eclosure(s sets.SetInt) sets.SetInt {
-	current := s
-	ec := s
-	prevLen := -1
+// EclosureS returns the set of states reachable from the specified
+// state on e-transitions alone. Note that a path can have zero edges,
+// so any state is reachable from itself by an e-labeled path.
+func (n Nfa) EclosureS(s int) sets.SetInt {
+	current := sets.NewSetInt(s)
+	ecl := current
+	prevLength := -1
 
-	for ec.Length() != prevLen {
-		prevLen = ec.Length()
+	for ecl.Length() != prevLength {
+		prevLength = ecl.Length()
 		next := sets.NewSetInt()
 		for _, state := range current.Elements() {
 			if eStates, ok := n.D[state][0]; ok {
-				ec = ec.Union(eStates)
+				ecl = ecl.Union(eStates)
 				next = next.Union(eStates)
 			}
 		}
 		current = next
 	}
 
-	return ec
+	return ecl
+}
+
+// EclosureT returns the set of states reachable from the provided
+// set of states on e-transitions alone.
+func (n Nfa) EclosureT(t sets.SetInt) sets.SetInt {
+	ecl := sets.NewSetInt()
+	for _, state := range t.Elements() {
+		ecl = ecl.Union(n.EclosureS(state))
+	}
+	return ecl
+}
+
+// Move returns the set of states reachable from set t on
+// input symbol a.
+func (n Nfa) Move(t sets.SetInt, a rune) sets.SetInt {
+	trans := sets.NewSetInt()
+	for _, state := range t.Elements() {
+		if p, ok := n.D[state][a]; ok {
+			trans = trans.Union(p)
+		}
+	}
+	return trans
 }
