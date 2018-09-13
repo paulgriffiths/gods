@@ -5,7 +5,7 @@ import "github.com/paulgriffiths/gods/sets"
 // Nfa implements a nondeterministic finite automaton.
 type Nfa struct {
 	Q      int                    // Number of states
-	S      []rune                 // Alphabet
+	S      sets.SetRune           // Alphabet
 	D      []map[rune]sets.SetInt // Transition function
 	Start  int                    // Start state
 	Accept sets.SetInt            // Set of accepting states

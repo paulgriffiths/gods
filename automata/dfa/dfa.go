@@ -5,7 +5,7 @@ import "github.com/paulgriffiths/gods/sets"
 // Dfa implements a deterministic finite automaton.
 type Dfa struct {
 	Q      int            // Number of states
-	S      []rune         // Alphabet
+	S      sets.SetRune   // Alphabet
 	D      []map[rune]int // Transition function
 	Start  int            // Start state
 	Accept sets.SetInt    // Set of accepting states

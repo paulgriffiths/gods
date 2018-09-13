@@ -17,7 +17,7 @@ with an even number of 0s following the last 1.
 func TestM1(t *testing.T) {
 	d := dfa.Dfa{
 		3,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]int{
 			{'0': 0, '1': 1},
 			{'0': 2, '1': 1},
@@ -64,7 +64,7 @@ DFA M2 accepts all strings that end with a 1.
 func TestM2(t *testing.T) {
 	d := dfa.Dfa{
 		2,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]int{
 			{'0': 0, '1': 1},
 			{'0': 0, '1': 1},
@@ -111,7 +111,7 @@ DFA M3 accepts the empty string and all strings that end in 0.
 func TestM3(t *testing.T) {
 	d := dfa.Dfa{
 		2,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]int{
 			{'0': 0, '1': 1},
 			{'0': 0, '1': 1},
@@ -158,7 +158,7 @@ DFA M4 accepts strings that start and end with the same letter.
 func TestM4(t *testing.T) {
 	d := dfa.Dfa{
 		5,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]int{
 			{'a': 1, 'b': 3},
 			{'a': 1, 'b': 2},
@@ -207,7 +207,7 @@ is divisible by 3. The reset symbol '.' resets the count to zero.
 func TestM5(t *testing.T) {
 	d := dfa.Dfa{
 		5,
-		[]rune{'.', '0', '1', '2'},
+		sets.NewSetRune('.', '0', '1', '2'),
 		[]map[rune]int{
 			{'.': 0, '0': 0, '1': 1, '2': 2},
 			{'.': 0, '0': 1, '1': 2, '2': 0},

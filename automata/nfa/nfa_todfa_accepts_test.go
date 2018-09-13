@@ -17,7 +17,7 @@ import (
 func TestNfaToDfa1(t *testing.T) {
 	d := nfa.Nfa{
 		4,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{'a': sets.NewSetInt(0, 1), 'b': sets.NewSetInt(0)},
 			{'b': sets.NewSetInt(2)},
@@ -78,7 +78,7 @@ func TestNfaToDfa1(t *testing.T) {
 func TestNfaToDfa2(t *testing.T) {
 	d := nfa.Nfa{
 		5,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(1, 3)},
 			{'a': sets.NewSetInt(2)},
@@ -128,7 +128,7 @@ func TestNfaToDfa2(t *testing.T) {
 func TestNfaToDfa3(t *testing.T) {
 	d := nfa.Nfa{
 		4,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{'a': sets.NewSetInt(0, 1), 'b': sets.NewSetInt(0)},
 			{'a': sets.NewSetInt(1, 2), 'b': sets.NewSetInt(1)},
@@ -183,7 +183,7 @@ func TestNfaToDfa3(t *testing.T) {
 func TestNfaToDfa4(t *testing.T) {
 	d := nfa.Nfa{
 		4,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(3), 'a': sets.NewSetInt(1)},
 			{0: sets.NewSetInt(0), 'b': sets.NewSetInt(2)},
@@ -233,7 +233,7 @@ func TestNfaToDfa4(t *testing.T) {
 func TestNfaToDfa5(t *testing.T) {
 	d := nfa.Nfa{
 		4,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]sets.SetInt{
 			{'0': sets.NewSetInt(0), '1': sets.NewSetInt(0, 1)},
 			{0: sets.NewSetInt(2), '0': sets.NewSetInt(2)},
@@ -281,7 +281,7 @@ func TestNfaToDfa5(t *testing.T) {
 func TestNfaToDfa6(t *testing.T) {
 	d := nfa.Nfa{
 		4,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]sets.SetInt{
 			{'0': sets.NewSetInt(0), '1': sets.NewSetInt(0, 1)},
 			{'0': sets.NewSetInt(2), '1': sets.NewSetInt(2)},
@@ -328,7 +328,7 @@ func TestNfaToDfa6(t *testing.T) {
 func TestNfaToDfa7(t *testing.T) {
 	d := nfa.Nfa{
 		6,
-		[]rune{'0', '1'},
+		sets.NewSetRune('0', '1'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(1, 3)},
 			{'0': sets.NewSetInt(2)},
@@ -369,7 +369,7 @@ func TestNfaToDfa7(t *testing.T) {
 func TestNfaToDfa8(t *testing.T) {
 	d := nfa.Nfa{
 		3,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(2), 'b': sets.NewSetInt(1)},
 			{'a': sets.NewSetInt(1, 2), 'b': sets.NewSetInt(2)},

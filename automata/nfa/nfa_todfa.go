@@ -10,7 +10,7 @@ func (n Nfa) makeDtran() dtran {
 
 	i := 0
 	for i < ds.length() {
-		for _, letter := range n.S {
+		for _, letter := range n.S.Elements() {
 			nextState := n.EclosureT(n.Move(ds[i].nfaState, letter))
 			if j, yes := ds.stateExists(nextState); yes {
 				ds.addTrans(i, j, letter)

@@ -56,7 +56,7 @@ func TestSetIntLength(t *testing.T) {
 	}
 }
 
-func TestSetContains(t *testing.T) {
+func TestSetIntContains(t *testing.T) {
 	testCases := []struct {
 		values   []int
 		contains []bool
@@ -85,7 +85,7 @@ func TestSetContains(t *testing.T) {
 	}
 }
 
-func TestSetUnion(t *testing.T) {
+func TestSetIntUnion(t *testing.T) {
 	testCases := []struct {
 		a, b, u sets.SetInt
 	}{
@@ -100,7 +100,7 @@ func TestSetUnion(t *testing.T) {
 	}
 }
 
-func TestSetIntersection(t *testing.T) {
+func TestSetIntIntersection(t *testing.T) {
 	testCases := []struct {
 		a, b, i sets.SetInt
 	}{

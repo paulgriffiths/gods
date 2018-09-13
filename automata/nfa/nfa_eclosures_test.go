@@ -16,7 +16,7 @@ import (
 func TestNfaEclosureS1(t *testing.T) {
 	n := nfa.Nfa{
 		11,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(1, 7)},
 			{0: sets.NewSetInt(2, 4)},
@@ -66,7 +66,7 @@ func TestNfaEclosureS1(t *testing.T) {
 func TestNfaEclosureS2(t *testing.T) {
 	n := nfa.Nfa{
 		4,
-		[]rune{'a', 'b'},
+		sets.NewSetRune('a', 'b'),
 		[]map[rune]sets.SetInt{
 			{0: sets.NewSetInt(3), 'a': sets.NewSetInt(1)},
 			{0: sets.NewSetInt(0), 'b': sets.NewSetInt(2)},
