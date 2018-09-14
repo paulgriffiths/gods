@@ -18,7 +18,11 @@ substring
 * Aside from concatenation which requires no special characters, the
 Kleene star or closure (*) and union (|) operators are available
 
-* Parentheses may be used and nested to any depth
+* The precedences of operators, from highest to lowest, is closure,
+concatenation, then union
+
+* Parentheses may be used and nested to any depth for grouping or for
+overriding default operator predecence
 
 ## Usage examples
 
