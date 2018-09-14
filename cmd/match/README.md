@@ -16,9 +16,9 @@ of the usable regular expressions is therefore relatively limited.
 substring
 
 * Aside from concatenation which requires no special characters, the
-Kleene star or closure (*) and union (|) operators are available.
+Kleene star or closure (*) and union (|) operators are available
 
-* Parentheses may be used and nested to any depth.
+* Parentheses may be used and nested to any depth
 
 ## Usage examples
 
