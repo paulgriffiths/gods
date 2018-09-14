@@ -1,61 +1,66 @@
 package sets
 
 // SetInt implements a set of integers.
-type SetInt struct {
-	set SetInterface
-}
+type SetInt map[int]bool
 
 // NewSetInt creates a new set of integers with optional initial elements.
 func NewSetInt(values ...int) SetInt {
-	newSet := NewSetInterface(func(a, b interface{}) bool {
-		return a.(int) == b.(int)
-	})
+	newSet := make(map[int]bool)
 	for _, value := range values {
-		newSet.Insert(value)
+		newSet[value] = true
 	}
-	return SetInt{newSet}
+	return newSet
 }
 
 // IsEmpty returns true if a set is the empty set.
 func (s SetInt) IsEmpty() bool {
-	return s.set.IsEmpty()
+	return len(s) == 0
 }
 
 // Length returns the number of elements in the set.
 func (s SetInt) Length() int {
-	return s.set.Length()
+	return len(s)
 }
 
 // Elements returns an array of the elements in the set.
 func (s SetInt) Elements() []int {
-	list := []int{}
-	for _, elem := range s.set.Elements() {
-		list = append(list, elem.(int))
+	list := make([]int, 0, len(s))
+	for key := range s {
+		list = append(list, key)
 	}
 	return list
 }
 
 // Equals tests if two sets contain the same members
 func (s SetInt) Equals(other SetInt) bool {
-	return s.set.Equals(other.set)
+	if len(s) != len(other) || len(s) != len(s.Union(other)) {
+		return false
+	}
+	return true
 }
 
 // Contains returns true if the set contains the specified integer.
 func (s SetInt) Contains(n int) bool {
-	return s.set.Contains(n)
+	return s[n]
 }
 
 // Insert inserts an integer into a set if it isn't already in the set.
 func (s *SetInt) Insert(n int) {
-	s.set.Insert(n)
+	(*s)[n] = true
 }
 
 // Intersection returns the intersection of two sets.
 func (s SetInt) Intersection(other SetInt) SetInt {
-	return SetInt{s.set.Intersection(other.set)}
+	inter := NewSetInt()
+	for key := range s {
+		if other[key] {
+			inter[key] = true
+		}
+	}
+	return inter
 }
 
 // Union returns the union of two sets.
 func (s SetInt) Union(other SetInt) SetInt {
-	return SetInt{s.set.Union(other.set)}
+	return NewSetInt(append(s.Elements(), other.Elements()...)...)
 }
