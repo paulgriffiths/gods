@@ -2,6 +2,24 @@
 
 **match** demonstrates the simple regular expression package.
 
+## Notes
+
+The simple regular expression package is an exercise in generating finite
+automata from regular expressions in string format, and the functionality
+of the usable regular expressions is therefore relatively limited.
+
+* Any letter or number may be used as a matching character
+
+* There are no wildcard characters or character classes
+
+* A match is returned only if the entire string matches, rather than any
+substring
+
+* Aside from concatenation which requires no special characters, the
+Kleene star or closure (*) and union (|) operators are available.
+
+* Parentheses may be used and nested to any depth.
+
 ## Usage examples
 
 	paul@horus:match$ ./match '0*|1*' numbers.txt
