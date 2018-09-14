@@ -192,7 +192,7 @@ func (m maze) image(vl graphs.VertexList) image.Image {
 
 // toGraph returns a graph representing the maze.
 func (m maze) toGraph() graphs.Graph {
-	g := graphs.NewAmGraph(len(m.cells))
+	g := graphs.NewAlGraph(len(m.cells))
 	for l := range m.cells {
 		c := m.cell(l)
 		if !c.hasAttr(northWall) {

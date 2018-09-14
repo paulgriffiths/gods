@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestAmGraphBfs(t *testing.T) {
-	g := graphs.NewAmGraph(8)
+func TestAlGraphBfs(t *testing.T) {
+	g := graphs.NewAlGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
@@ -24,8 +24,8 @@ func TestAmGraphBfs(t *testing.T) {
 	}
 }
 
-func TestAmGraphDfs(t *testing.T) {
-	g := graphs.NewAmGraph(8)
+func TestAlGraphDfs(t *testing.T) {
+	g := graphs.NewAlGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
@@ -43,8 +43,8 @@ func TestAmGraphDfs(t *testing.T) {
 	}
 }
 
-func TestAmGraphDfsIter(t *testing.T) {
-	g := graphs.NewAmGraph(8)
+func TestAlGraphDfsIter(t *testing.T) {
+	g := graphs.NewAlGraph(8)
 	g.InsertEdge(0, 1)
 	g.InsertEdge(0, 2)
 	g.InsertEdge(1, 3)
