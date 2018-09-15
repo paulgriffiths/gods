@@ -2,5 +2,4 @@
 *~
 *.swp
 cmd/maze/maze
-cmd/match/match
 *.png
