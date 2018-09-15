@@ -25,3 +25,26 @@ func (d Dfa) Accepts(input string) bool {
 
 	return d.Accept.Contains(currentState)
 }
+
+// AcceptsPrefix checks if there is a prefix of the provided string
+// which is accepted by the DFA. If it is, the function returns true
+// and the length of the prefix. Otherwise, it returns false and zero.
+func (d Dfa) AcceptsPrefix(input string) (bool, int) {
+	currentState := d.Start
+	ok := false
+	matches := false
+	longest := 0
+
+	for n, letter := range input {
+		currentState, ok = d.D[currentState][letter]
+		if !ok {
+			break
+		}
+		if d.Accept.Contains(currentState) {
+			matches = true
+			longest = n + 1
+		}
+	}
+
+	return matches, longest
+}
