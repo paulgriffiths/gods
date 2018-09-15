@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestRegex(t *testing.T) {
+func TestRegexAccepts(t *testing.T) {
 	testCases := []struct {
 		rx, s  string
 		result bool
@@ -79,6 +79,40 @@ func TestRegex(t *testing.T) {
 		}
 		if result := r.Match(tc.s); result != tc.result {
 			t.Errorf("case %d, got %t, want %t", n+1, result, tc.result)
+		}
+	}
+}
+
+func TestRegexAcceptsPrefix(t *testing.T) {
+	testCases := []struct {
+		rx, s   string
+		matches bool
+		length  int
+	}{
+		{"a*", "", true, 0},
+		{"a*", "a", true, 1},
+		{"a*", "ab", true, 1},
+		{"a*", "aa", true, 2},
+		{"a*", "aab", true, 2},
+		{"(a|b)*", "aababababa", true, 10},
+		{"(a|b)*", "aababababacdefg", true, 10},
+		{"(a|b)*", "cdefgaababababa", false, 0},
+		{"a*b*", "aaabbb", true, 6},
+		{"a*b*", "aaabbbaaa", true, 6},
+		{"a*b*", "bbbaaa", true, 3},
+		{"a*b*", "bbbaaabbb", true, 3},
+		{"a*b*", "cccbbbaaabbb", false, 0},
+	}
+
+	for n, tc := range testCases {
+		r := regex.Compile(tc.rx)
+		if r == nil {
+			t.Errorf("case %d, couldn't compile regex", n+1)
+			continue
+		}
+		if m, l := r.MatchPrefix(tc.s); m != tc.matches || l != tc.length {
+			t.Errorf("case %d, got (%t, %d), want (%t, %d)",
+				n+1, m, l, tc.matches, tc.length)
 		}
 	}
 }

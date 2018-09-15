@@ -35,6 +35,10 @@ func (d Dfa) AcceptsPrefix(input string) (bool, int) {
 	matches := false
 	longest := 0
 
+	if len(input) == 0 && d.Accept.Contains(currentState) {
+		return true, 0
+	}
+
 	for n, letter := range input {
 		currentState, ok = d.D[currentState][letter]
 		if !ok {

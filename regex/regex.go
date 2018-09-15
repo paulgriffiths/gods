@@ -17,6 +17,14 @@ func (r *Regex) Match(s string) bool {
 	return r.d.Accepts(s)
 }
 
+// MatchPrefix tests if there is a prefix of the supplied string
+// which matches the regular expression. If there is, it returns true
+// and the length of the longest matching prefix. Otherwise, it returns
+// false and zero.
+func (r *Regex) MatchPrefix(s string) (bool, int) {
+	return r.d.AcceptsPrefix(s)
+}
+
 // Compile compiles a regular expression provided in string form.
 func Compile(r string) *Regex {
 	lar, err := lar.NewLookaheadReader(strings.NewReader(r))
