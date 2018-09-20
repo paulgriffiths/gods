@@ -49,6 +49,15 @@ func (s *SetInt) Insert(n int) {
 	(*s)[n] = true
 }
 
+// Merge inserts into a set the elements from another set.
+func (s *SetInt) Merge(other SetInt) {
+	for key, value := range other {
+		if value {
+			(*s)[key] = true
+		}
+	}
+}
+
 // Intersection returns the intersection of two sets.
 func (s SetInt) Intersection(other SetInt) SetInt {
 	inter := NewSetInt()
