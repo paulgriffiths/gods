@@ -69,6 +69,18 @@ func (s SetInt) Intersection(other SetInt) SetInt {
 	return inter
 }
 
+// Difference returns the elements which are in set s, but not
+// in set other.
+func (s SetInt) Difference(other SetInt) SetInt {
+	diff := NewSetInt()
+	for key := range s {
+		if !other[key] {
+			diff[key] = true
+		}
+	}
+	return diff
+}
+
 // Union returns the union of two sets.
 func (s SetInt) Union(other SetInt) SetInt {
 	return NewSetInt(append(s.Elements(), other.Elements()...)...)

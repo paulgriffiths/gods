@@ -10,6 +10,7 @@ var (
 	si0    = sets.NewSetInt(0)
 	si1    = sets.NewSetInt(1)
 	si2    = sets.NewSetInt(2)
+	si4    = sets.NewSetInt(4)
 	si01   = sets.NewSetInt(0, 1)
 	si10   = sets.NewSetInt(1, 0)
 	si02   = sets.NewSetInt(0, 2)
@@ -110,6 +111,21 @@ func TestSetIntIntersection(t *testing.T) {
 
 	for n, tc := range testCases {
 		if s := tc.a.Intersection(tc.b); !s.Equals(tc.i) {
+			t.Errorf("case %d, got %v, want %v", n+1, s, tc.i)
+		}
+	}
+}
+
+func TestSetIntDifference(t *testing.T) {
+	testCases := []struct {
+		a, b, i sets.SetInt
+	}{
+		{si1234, si34, si12}, {si1234, si123, si4},
+		{si012, si12, si0}, {si1234, si1234, siE},
+	}
+
+	for n, tc := range testCases {
+		if s := tc.a.Difference(tc.b); !s.Equals(tc.i) {
 			t.Errorf("case %d, got %v, want %v", n+1, s, tc.i)
 		}
 	}
