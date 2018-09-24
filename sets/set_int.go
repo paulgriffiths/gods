@@ -58,6 +58,15 @@ func (s *SetInt) Merge(other SetInt) {
 	}
 }
 
+// Copy returns a copy of the set.
+func (s SetInt) Copy() SetInt {
+	c := NewSetInt()
+	for key := range s {
+		c[key] = true
+	}
+	return c
+}
+
 // Intersection returns the intersection of two sets.
 func (s SetInt) Intersection(other SetInt) SetInt {
 	inter := NewSetInt()
