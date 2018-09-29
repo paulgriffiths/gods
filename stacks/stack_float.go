@@ -20,6 +20,12 @@ func (s *StackFloat) Pop() float64 {
 	return s.stack.Pop().(float64)
 }
 
+// Peek returns the top float element from the stack without
+// removing it.
+func (s *StackFloat) Peek() float64 {
+	return s.stack.Peek().(float64)
+}
+
 // IsEmpty returns true if the stack is empty, otherwise false.
 func (s *StackFloat) IsEmpty() bool {
 	return s.stack.IsEmpty()

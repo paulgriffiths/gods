@@ -20,6 +20,12 @@ func (s *StackInt) Pop() int {
 	return s.stack.Pop().(int)
 }
 
+// Peek returns the top int element from the stack without
+// removing it.
+func (s *StackInt) Peek() int {
+	return s.stack.Peek().(int)
+}
+
 // IsEmpty returns true if the stack is empty, otherwise false.
 func (s *StackInt) IsEmpty() bool {
 	return s.stack.IsEmpty()

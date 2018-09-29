@@ -20,6 +20,12 @@ func (s *StackRune) Pop() rune {
 	return s.stack.Pop().(rune)
 }
 
+// Peek returns the top rune element from the stack without
+// removing it.
+func (s *StackRune) Peek() rune {
+	return s.stack.Peek().(rune)
+}
+
 // IsEmpty returns true if the stack is empty, otherwise false.
 func (s *StackRune) IsEmpty() bool {
 	return s.stack.IsEmpty()
